@@ -13,12 +13,13 @@ const root = ReactDOM.createRoot(
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDWFdP9aE8vAwyMG1jq6pc0_MHr6ItLk84",
-  authDomain: "ifc-react-app.firebaseapp.com",
-  projectId: "ifc-react-app",
-  storageBucket: "ifc-react-app.appspot.com",
-  messagingSenderId: "54427550535",
-  appId: "1:54427550535:web:56f3c2daa707f1606e8262",
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
 };
 
 // Initialize Firebase

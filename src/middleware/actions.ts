@@ -1,6 +1,6 @@
-export type ActionType = "LOGIN" | "UPDATE_USER";
+export type ActionType = "LOGIN" | "UPDATE_USER" | "LOGOUT";
 
 export interface Action {
     type: ActionType;
-    payload: any;
+    payload?: any;
 }
