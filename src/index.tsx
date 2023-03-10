@@ -2,9 +2,24 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import { initializeApp } from "firebase/app";
+import { ThemeProvider, createTheme } from "@mui/material/";
+
+import "@fontsource/montserrat/300.css";
+import "@fontsource/montserrat/500.css";
+import "@fontsource/montserrat/600.css";
+import "@fontsource/montserrat/700.css";
+
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#EF6337",
+    },
+  },
+});
 
 // Import the functions you need from the SDKs you need
 
@@ -26,7 +41,9 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  <ThemeProvider theme={theme}>
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  </ThemeProvider>
 );

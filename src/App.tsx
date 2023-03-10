@@ -1,9 +1,9 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
-import { BuildingViewer } from "./components/building-viewer";
+import { BuildingViewer } from "./components/building/building-viewer";
 import { LoginForm } from "./components/user/login-form";
-import { MapViewer } from "./components/map-viewer";
+import { MapViewer } from "./components/map/map-viewer";
 import { ContextProvider } from "./middleware/context-provider";
 
 function App() {

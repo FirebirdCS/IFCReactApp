@@ -1,4 +1,6 @@
+import Button from "@mui/material/Button/Button";
 import { FC } from "react";
+import { Navigate } from "react-router-dom";
 import { useAppContext } from "../../middleware/context-provider";
 
 export const LoginForm: FC = () => {
@@ -8,20 +10,14 @@ export const LoginForm: FC = () => {
     dispatch({ type: "LOGIN" });
   };
 
-  const onLogout = () => {
-    dispatch({ type: "LOGOUT" });
-  };
-
+  if (state.user) {
+    return <Navigate to="/map" />;
+  }
   return (
     <h1>
-      {state.user ? (
-        <>
-          <p>{state.user.displayName}</p>
-          <button onClick={onLogout}>Logout</button>
-        </>
-      ) : (
-        <button onClick={onLogin}>Login</button>
-      )}
+      <Button variant="contained" color="primary" onClick={onLogin}>
+        Login
+      </Button>
     </h1>
   );
 };
