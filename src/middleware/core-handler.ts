@@ -10,9 +10,13 @@ export const executeCore = (action: Action) => {
         userAuth.Logout();
     }
     if(action.type === "START_MAP"){
-        mapHandler.start(action.payload);
+        const {container} = action.payload;
+        mapHandler.start(container);
     }
     if(action.type === "REMOVE_MAP"){
         mapHandler.remove();
+    }
+    if(action.type === "ADD_BUILDING"){
+        mapHandler.addBuilding(action.payload);
     }
 }
