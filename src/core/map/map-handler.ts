@@ -1,12 +1,13 @@
-import { User } from "firebase/auth";
+import { User} from "firebase/auth";
 import { MapScene } from "./map-scene";
 
 export const mapHandler  = {
     map: null as MapScene | null,
-    start (container: HTMLDivElement){
+    async start (container: HTMLDivElement, user: User){
         if(!this.map){
             console.log("Map started")
             this.map = new MapScene(container);
+            await this.map.getAllBuildings(user);
         }
     },
     remove(){

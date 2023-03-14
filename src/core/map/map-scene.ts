@@ -4,6 +4,7 @@ import * as MAPBOX from "mapbox-gl";
 import * as THREE from 'three';
 import { User } from 'firebase/auth';
 import { CSS2DObject } from 'three/examples/jsm/renderers/CSS2DRenderer';
+import { MapDatabase } from './map-database';
 
 export class MapScene {
     private components = new OBC.Components();
@@ -12,6 +13,7 @@ export class MapScene {
     private map: MAPBOX.Map;
     private center: LngLat = {lat: 0, lng: 0};
     private labels: {[id: string]: CSS2DObject} = {};
+    private database = new MapDatabase();
     constructor(container: HTMLDivElement){
         const configuration = this.getConfig(container);
         this.map = this.createMap(configuration);
@@ -31,10 +33,18 @@ export class MapScene {
         this.labels = {};
     }
 
-    addBuilding(user: User){
+    async getAllBuildings(user: User){
+        const buildings = await this.database.getBuildings(user);
+        if(this.components){
+            this.addToScene(buildings);
+        }
+    }
+
+    async addBuilding(user: User){
         const {lat,lng} = this.clickedCoordinates;
         const userId = user.uid;
         const building = {userId, lat,lng, uid: ""};
+        building.uid = await this.database.add(building); 
         this.addToScene([building]);
     }
 
