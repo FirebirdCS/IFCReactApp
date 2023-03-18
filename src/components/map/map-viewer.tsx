@@ -8,7 +8,7 @@ export const MapViewer: FC = () => {
   const [isCreating, setIsCreating] = useState(false);
   const containerRef = useRef(null);
   const [state, dispatch] = useAppContext();
-  const { user } = state;
+  const { user, building } = state;
 
   const onToggleCreate = () => {
     setIsCreating(!isCreating);
@@ -34,6 +34,11 @@ export const MapViewer: FC = () => {
 
   if (!user) {
     return <Navigate to="/login" />;
+  }
+
+  if (building) {
+    const url = `/building?id=${building}`;
+    return <Navigate to={url} />;
   }
 
   const onLogout = () => {
