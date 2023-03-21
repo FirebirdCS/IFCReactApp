@@ -7,9 +7,9 @@ export class MapDatabase {
     private readonly buildings = "buildings";
     async add(building: Building){
         const dbInstance = getFirestore(getApp());
-        const {lat,lng,userId} = building;
+        const {lat,lng,userId, name} = building;
         const result = await addDoc(collection(dbInstance, this.buildings), {
-            lat, lng, userId
+            lat, lng, userId, name
         });
         return result.id;
     }

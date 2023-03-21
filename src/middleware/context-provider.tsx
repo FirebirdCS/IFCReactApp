@@ -5,7 +5,7 @@ import {
   createContext,
   useContext,
 } from "react";
-import { Action } from "./actions";
+import { Action, ActionList } from "./actions";
 import { Authenticator } from "./authenticator";
 import { executeCore } from "./core-handler";
 import { Events } from "./event-handler";
@@ -21,9 +21,11 @@ export const ContextProvider: FC<PropsWithChildren> = ({ children }) => {
   const [state, setState] = useReducer(reducer, initialState);
 
   const events = new Events();
-  events.on("OPEN_BUILDING", (buildingId: string) => {
-    setState({ type: "OPEN_BUILDING", payload: buildingId });
-  });
+  for (const type of ActionList) {
+    events.on(type, (payload: any) => {
+      setState({ type, payload });
+    });
+  }
 
   const dispatch = (value: Action) => {
     setState(value);
