@@ -6,12 +6,15 @@ import { BuildingDrawer } from "./building-drawer";
 import { BuildingTopBar } from "./building-topbar";
 import { BuildingFrontMenu } from "./front-menu/building-front-menu";
 import { getDrawerHeader } from "./mui-utils";
+import { FrontMenuMode } from "./types";
 
 export const BuildingViewer: FC = () => {
+  const [width] = useState(240);
   const [sideOpen, setSideOpen] = useState(false);
   const [frontOpen, setFrontOpen] = useState(false);
-  const [width] = useState(240);
-  const [{ user, building }, dispatch] = useAppContext();
+  const [frontMenuMode, setFrontMenuMode] =
+    useState<FrontMenuMode>("BuildingInfo");
+  const [{ user, building }] = useAppContext();
 
   if (!building) {
     return <Navigate to={"/map"} />;
@@ -25,7 +28,10 @@ export const BuildingViewer: FC = () => {
     setSideOpen(active);
   };
 
-  const toggleFrontMenu = (active = !frontOpen) => {
+  const toggleFrontMenu = (active: boolean, mode?: FrontMenuMode) => {
+    if (mode) {
+      setFrontMenuMode(mode);
+    }
     setFrontOpen(active);
   };
 
@@ -43,14 +49,14 @@ export const BuildingViewer: FC = () => {
           width={width}
           open={sideOpen}
           onClose={() => toggleDrawer(false)}
-          onToggleMenu={() => toggleFrontMenu(true)}
+          onToggleMenu={toggleFrontMenu}
         ></BuildingDrawer>
         <Box component="main" sx={{ flexGrow: 1, p: 6 }}>
           <DrawerHeader />
           <BuildingFrontMenu
-            onToggleMenu={() => toggleFrontMenu(false)}
+            onToggleMenu={toggleFrontMenu}
             open={frontOpen}
-            mode="BuildingInfo"
+            mode={frontMenuMode}
           />
           <h1>Welcome to the BIM-CA viewer</h1>
         </Box>

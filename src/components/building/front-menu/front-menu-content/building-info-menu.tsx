@@ -1,6 +1,5 @@
-import { Alert, Button, TextField } from "@mui/material";
-import Stack from "@mui/system/Stack";
-import { FC, useRef } from "react";
+import { Button, TextField } from "@mui/material";
+import { FC } from "react";
 import { useAppContext } from "../../../../middleware/context-provider";
 import "./front-menu-content.css";
 

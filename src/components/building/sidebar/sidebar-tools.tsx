@@ -10,6 +10,7 @@ import { Action } from "../../../middleware/actions";
 import { State } from "../../../middleware/state";
 import Alert from "@mui/material/Alert/Alert";
 import React, { useState } from "react";
+import { FrontMenuMode } from "../types";
 
 interface SideTool {
   name: string;
@@ -20,20 +21,22 @@ interface SideTool {
 export function getSidebarTools(
   state: State,
   dispatch: React.Dispatch<Action>,
-  toggleMenu: () => void
+  toggleMenu: (active: boolean, mode?: FrontMenuMode) => void
 ): SideTool[] {
   return [
     {
       name: "Info",
       icon: <ListIcon />,
       action: () => {
-        toggleMenu();
+        toggleMenu(true, "BuildingInfo");
       },
     },
     {
       name: "Models",
       icon: <ModelsIcon />,
-      action: () => {},
+      action: () => {
+        toggleMenu(true, "ModelList");
+      },
     },
     {
       name: "Floorplans",

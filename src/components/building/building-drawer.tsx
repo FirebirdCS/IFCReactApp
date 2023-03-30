@@ -7,11 +7,12 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { BuildingSidebar } from "./sidebar/building-sidebar";
 import { getDrawer, getDrawerHeader } from "./mui-utils";
 import { Typography } from "@mui/material";
+import { FrontMenuMode } from "./types";
 
 export const BuildingDrawer: FC<{
   open: boolean;
   width: number;
-  onToggleMenu: () => void;
+  onToggleMenu: (active: boolean, mode?: FrontMenuMode) => void;
   onClose: () => void;
 }> = (props) => {
   const theme = useTheme();
@@ -32,7 +33,6 @@ export const BuildingDrawer: FC<{
           )}
         </IconButton>
       </DrawerHeader>
-      <Typography align="center">Options</Typography>
       <BuildingSidebar onToggleMenu={onToggleMenu} open={open} />
       <Divider />
     </Drawer>
