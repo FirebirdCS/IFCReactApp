@@ -4,10 +4,10 @@ import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import { BuildingSidebar } from "./sidebar/building-sidebar";
+import { BuildingSidebar } from "./building-sidebar";
 import { getDrawer, getDrawerHeader } from "./mui-utils";
 import { Typography } from "@mui/material";
-import { FrontMenuMode } from "./types";
+import { FrontMenuMode } from "../types";
 
 export const BuildingDrawer: FC<{
   open: boolean;

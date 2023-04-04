@@ -1,7 +1,7 @@
 import { Button, IconButton } from "@mui/material";
 import { FC } from "react";
 import { useAppContext } from "../../../../middleware/context-provider";
-import { BuildingDrawer } from "../../building-drawer";
+import { BuildingDrawer } from "../../side-menu/building-drawer";
 import DeleteIcon from "@mui/icons-material/Clear";
 import "./front-menu-content.css";
 export const ModelListMenu: FC = () => {

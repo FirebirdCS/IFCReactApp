@@ -2,11 +2,12 @@ import { Box } from "@mui/material";
 import { FC, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { useAppContext } from "../../middleware/context-provider";
-import { BuildingDrawer } from "./building-drawer";
-import { BuildingTopBar } from "./building-topbar";
+import { BuildingDrawer } from "./side-menu/building-drawer";
+import { BuildingTopBar } from "./side-menu/building-topbar";
 import { BuildingFrontMenu } from "./front-menu/building-front-menu";
-import { getDrawerHeader } from "./mui-utils";
+import { getDrawerHeader } from "./side-menu/mui-utils";
 import { FrontMenuMode } from "./types";
+import { BuildingViewport } from "./viewport/building-viewport";
 
 export const BuildingViewer: FC = () => {
   const [width] = useState(240);
@@ -58,7 +59,7 @@ export const BuildingViewer: FC = () => {
             open={frontOpen}
             mode={frontMenuMode}
           />
-          <h1>Welcome to the BIM-CA viewer</h1>
+          <BuildingViewport />
         </Box>
       </Box>
     </>
