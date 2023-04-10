@@ -1,4 +1,4 @@
-import { buildingHandler } from './../core/building/buillding-handler';
+import { buildingHandler } from '../core/building/building-handler';
 import { databaseHandler } from "../core/db/db-handler";
 import { mapHandler } from "../core/map/map-handler";
 import { Action } from "./actions";

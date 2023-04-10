@@ -6,15 +6,22 @@ import { downloadZip } from "client-zip";
 import { unzip } from "unzipit";
 
 export class BuildingScene {
+    database = new BuildingDb();
     private components: OBC.Components;
     private fragments: OBC.Fragments;
-    private database = new BuildingDb();
+    private sceneEvents: {name: any, action: any}[] = [];
+
+    get container(){
+        const domElement = this.components.renderer.get().domElement;
+        return domElement.parentElement as HTMLDivElement;
+    }
+    
+
     constructor(container: HTMLDivElement, building: Building){
         this.components = new OBC.Components();
         const sceneComponent = new OBC.SimpleScene(this.components);
         const scene = sceneComponent.get();
         scene.background = null;
-        scene.position.set(0,2.5,0);
         const directionalLight = new THREE.DirectionalLight();
         directionalLight.position.set(5,10,3);
         directionalLight.intensity = 0.5;
@@ -22,9 +29,6 @@ export class BuildingScene {
         const ambientLight = new THREE.AmbientLight();
         ambientLight.intensity = 0.5;
         scene.add(ambientLight);
-        const positionModel = new THREE.Mesh();
-        positionModel.position.set(0,2.5,0);
-        scene.add(positionModel);
         this.components.scene = sceneComponent;
         this.components.renderer = new OBC.SimpleRenderer(
             this.components,
@@ -37,13 +41,37 @@ export class BuildingScene {
         this.fragments = new OBC.Fragments(this.components);
         this.components.tools.add(this.fragments);
         this.loadAllModels(building);
+        this.setupEvents();
     }
-
     dispose(){
         this.components.dispose();
+        this.toggleEvents(false);
         (this.components as any) = null;
         (this.fragments as any) = null;
     }
+    
+    private setupEvents = () => {
+        this.sceneEvents = [
+            {name: "mouseup", action: this.updateCulling},
+            {name: "wheel", action: this.updateCulling},
+        ];
+        this.toggleEvents(true);
+    }
+
+    private toggleEvents(active: Boolean){
+        for(const event of this.sceneEvents){
+            if(active){
+                window.addEventListener(event.name, event.action);
+            } else{
+                window.removeEventListener(event.name, event.action);
+            }
+        }
+    }
+
+    private updateCulling = () =>{
+        this.fragments.culler.needsUpdate = true;
+    }
+
 
     async convertIfcToFragments(ifc: File){
         let fragments = new OBC.Fragments(this.components);
@@ -79,8 +107,6 @@ export class BuildingScene {
         files.push(new File([JSON.stringify(model.expressIDFragmentIDMap)], 'express-fragment-map.json'));
         return downloadZip(files).blob();
     }
-
-
 
     private async loadAllModels(building: Building){
         const modelsURLs = await this.database.getModels(building); 
