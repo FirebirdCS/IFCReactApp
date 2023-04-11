@@ -35,11 +35,16 @@ export class BuildingScene {
             container
         );
         this.components.camera = new OBC.SimpleCamera(this.components);
+        this.components.raycaster = new OBC.SimpleRaycaster(this.components);
         this.components.init();
         const grid = new OBC.SimpleGrid(this.components);
         this.components.tools.add(grid);
         this.fragments = new OBC.Fragments(this.components);
         this.components.tools.add(this.fragments);
+        const selectMat = new THREE.MeshBasicMaterial({color: "white"});
+        const preselectMat = new THREE.MeshBasicMaterial({color: "white", opacity: 0.5, transparent: true,})
+        this.fragments.highlighter.add("selection", [selectMat]);
+        this.fragments.highlighter.add("preselection", [preselectMat]);
         this.loadAllModels(building);
         this.setupEvents();
     }
@@ -54,6 +59,8 @@ export class BuildingScene {
         this.sceneEvents = [
             {name: "mouseup", action: this.updateCulling},
             {name: "wheel", action: this.updateCulling},
+            {name: "mousemove", action: this.preselect},
+            {name: "click", action: this.select},
         ];
         this.toggleEvents(true);
     }
@@ -128,9 +135,19 @@ export class BuildingScene {
     
                 await this.fragments.load(geometryURL, dataURL);
     
-                this.fragments.culler.needsUpdate = true;
             }
+            this.fragments.culler.needsUpdate = true;
+            this.fragments.highlighter.update();
+            this.fragments.highlighter.active = true;
         }
+    }
+
+    private preselect = () => {
+        this.fragments.highlighter.highlight("preselection");
+    }
+
+    private select = () => {
+        this.fragments.highlighter.highlight("selection");
     }
    
 };
