@@ -6,13 +6,12 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { BuildingSidebar } from "./building-sidebar";
 import { getDrawer, getDrawerHeader } from "./mui-utils";
-import { Typography } from "@mui/material";
 import { FrontMenuMode } from "../types";
 
 export const BuildingDrawer: FC<{
   open: boolean;
   width: number;
-  onToggleMenu: (active: boolean, mode?: FrontMenuMode) => void;
+  onToggleMenu: (active?: boolean, mode?: FrontMenuMode) => void;
   onClose: () => void;
 }> = (props) => {
   const theme = useTheme();
