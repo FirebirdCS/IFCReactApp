@@ -6,6 +6,7 @@ import ModelsIcon from "@mui/icons-material/HolidayVillage";
 import ListIcon from "@mui/icons-material/ViewList";
 import TableChartIcon from "@mui/icons-material/TableChart";
 import DeleteIcon from "@mui/icons-material/Delete";
+import PropertiesIcon from "@mui/icons-material/Info";
 import { Action } from "../../../middleware/actions";
 import { State } from "../../../middleware/state";
 import Alert from "@mui/material/Alert/Alert";
@@ -41,7 +42,16 @@ export function getSidebarTools(
     {
       name: "Floorplans",
       icon: <FloorplanIcon />,
-      action: () => {},
+      action: () => {
+        toggleMenu(true, "Floorplans");
+      },
+    },
+    {
+      name: "Properties",
+      icon: <PropertiesIcon />,
+      action: () => {
+        toggleMenu(true, "Properties");
+      },
     },
     {
       name: "Issues",

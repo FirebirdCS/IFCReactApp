@@ -1,10 +1,12 @@
 import { Building } from '../../types';
 import { BuildingScene } from './building-scene';
+import { Floorplan } from "./../../types";
+import { Events } from "./../../middleware/event-handler";
 export const buildingHandler = {
     viewer: null as BuildingScene | null,
-    start(container: HTMLDivElement, building: Building) {
+    start(container: HTMLDivElement, building: Building, events: Events) {
         if(!this.viewer){
-            this.viewer = new BuildingScene(container, building);
+            this.viewer = new BuildingScene(container, building, events);
         }
     },
     remove(){
@@ -25,12 +27,12 @@ export const buildingHandler = {
             await this.viewer.database.deleteModelsCache(id);
         }
     },
-    async refreshModels(building: Building){
+    async refreshModels(building: Building, events: Events){
         if(this.viewer){
             const container = this.viewer.container;
             this.viewer.dispose();
             this.viewer = null;
-            this.viewer = new BuildingScene(container,building);
+            this.viewer = new BuildingScene(container,building, events);
         }
     },
     explode(active: boolean) {
@@ -50,4 +52,9 @@ export const buildingHandler = {
           this.viewer.toggleDimensions(active);
         }
     },  
+    toggleFloorplan(active: boolean, floorplan?: Floorplan) {
+        if (this.viewer) {
+          this.viewer.toggleFloorplan(active, floorplan);
+        }
+    },
 };

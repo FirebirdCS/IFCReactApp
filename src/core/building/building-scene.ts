@@ -1,7 +1,10 @@
+import { Events } from "./../../middleware/event-handler";
+import { Floorplan } from "./../../types";
 import * as OBC from "openbim-components";
 import * as THREE from "three";
 import { BuildingDb } from "./building-db";
 import { Building } from "../../types";
+import { LineMaterial } from "three/examples/jsm/lines/LineMaterial";
 import { downloadZip } from "client-zip";
 import { unzip } from "unzipit";
 
@@ -9,15 +12,20 @@ export class BuildingScene {
     database = new BuildingDb();
     private components: OBC.Components;
     private fragments: OBC.Fragments;
-    private sceneEvents: {name: any, action: any}[] = [];
+    private floorplans: Floorplan[] = [];    
+    private whiteMaterial = new THREE.MeshBasicMaterial({ color: "white" });
 
     get container(){
         const domElement = this.components.renderer.get().domElement;
         return domElement.parentElement as HTMLDivElement;
     }
+
+    private sceneEvents: { name: any; action: any }[] = [];
+    private events: Events;
     
 
-    constructor(container: HTMLDivElement, building: Building){
+    constructor(container: HTMLDivElement, building: Building, events: Events){
+        this.events = events;
         this.components = new OBC.Components();
         const sceneComponent = new OBC.SimpleScene(this.components);
         const scene = sceneComponent.get();
@@ -34,20 +42,28 @@ export class BuildingScene {
             this.components,
             container
         );
-        this.components.camera = new OBC.SimpleCamera(this.components);
+        const camera = new OBC.OrthoPerspectiveCamera(this.components);
+        this.components.camera = camera;
         this.components.raycaster = new OBC.SimpleRaycaster(this.components);
         this.components.init();
         const dimensions = new OBC.SimpleDimensions(this.components);
         this.components.tools.add(dimensions);
         const clipper = new OBC.EdgesClipper(this.components, OBC.EdgesPlane);
         this.components.tools.add(clipper);
-        //const grid = new OBC.SimpleGrid(this.components);
-        //this.components.tools.add(grid);
+        const thinLineMaterial = new LineMaterial({
+            color: 0x000000,
+            linewidth: 0.001,
+        });
+        clipper.styles.create("thin_lines", [], thinLineMaterial);
+        const floorNav = new OBC.PlanNavigator(clipper, camera);
+        this.components.tools.add(floorNav);
+        const grid = new OBC.SimpleGrid(this.components);
+        this.components.tools.add(grid);
         this.fragments = new OBC.Fragments(this.components);
         this.components.tools.add(this.fragments);
         this.fragments.highlighter.active = true;
-        const selectMat = new THREE.MeshBasicMaterial({color: "white"});
-        const preselectMat = new THREE.MeshBasicMaterial({color: "white", opacity: 0.5, transparent: true,})
+        const selectMat = new THREE.MeshBasicMaterial({ color: 0x1976d2 });
+        const preselectMat = new THREE.MeshBasicMaterial({color: 0x1976d2, opacity: 0.5, transparent: true,})
         this.fragments.highlighter.add("selection", [selectMat]);
         this.fragments.highlighter.add("preselection", [preselectMat]);
         
@@ -58,6 +74,7 @@ export class BuildingScene {
     dispose(){
         this.components.dispose();
         this.toggleEvents(false);
+        this.whiteMaterial.dispose();
         (this.components as any) = null;
         (this.fragments as any) = null;
     }
@@ -108,6 +125,23 @@ export class BuildingScene {
           dimensions.enabled = active;
         }
     }
+
+    toggleFloorplan(active: boolean, floorplan?: Floorplan) {
+        const floorNav = this.getFloorNav();
+        if (!this.floorplans.length) return;
+        if (active && floorplan) {
+          this.toggleGrid(false);
+          this.toggleEdges(true);
+          const first = this.floorplans[0];
+          floorNav.goTo(floorplan.id);
+          this.fragments.materials.apply(this.whiteMaterial);
+        } else {
+          this.toggleGrid(true);
+          this.toggleEdges(false);
+          this.fragments.materials.reset();
+          floorNav.exitPlanView();
+        }
+      }
 
 
     private createClippingPlane = (event: KeyboardEvent) => {
@@ -172,6 +206,27 @@ export class BuildingScene {
         return file as File;
     }
 
+
+    private toggleGrid(visible: boolean) {
+        const grid = this.components.tools.get("SimpleGrid") as OBC.SimpleGrid;
+        const mesh = grid.get();
+        mesh.visible = visible;
+      }
+    private getFloorNav() {
+        return this.components.tools.get("PlanNavigator") as OBC.PlanNavigator;
+    }
+    
+    private toggleEdges(visible: boolean) {
+        const edges = Object.values(this.fragments.edges.edgesList);
+        const scene = this.components.scene.get();
+        for (const edge of edges) {
+          if (visible) scene.add(edge);
+          else edge.removeFromParent();
+        }
+    }
+
+
+
     private async serializeFragments(model: OBC.FragmentGroup){
         const files = [];
         for(const frag of model.fragments){
@@ -193,6 +248,41 @@ export class BuildingScene {
         for(const url of modelsURLs){
             const {entries} = await unzip(url);
             const fileNames = Object.keys(entries);
+
+            const allTypes = await entries["all-types.json"].json();
+            const modelTypes = await entries["model-types.json"].json();
+            const levelsProperties = await entries["levels-properties.json"].json();
+            const levelsRelationship = await entries[
+            "levels-relationship.json"
+            ].json();          
+
+
+
+            const levelOffset = 1.5;
+            const floorNav = this.getFloorNav();
+
+            if (this.floorplans.length === 0) {
+                for (const levelProps of levelsProperties) {
+                  const elevation = levelProps.SceneHeight + levelOffset;
+        
+                  this.floorplans.push({
+                    id: levelProps.expressID,
+                    name: levelProps.Name.value,
+                  });
+        
+                  // Create floorplan
+                  await floorNav.create({
+                    id: levelProps.expressID,
+                    ortho: true,
+                    normal: new THREE.Vector3(0, -1, 0),
+                    point: new THREE.Vector3(0, elevation, 0),
+                  });
+                }
+                this.events.trigger({
+                  type: "UPDATE_FLOORPLANS",
+                  payload: this.floorplans,
+                });
+            }
             for(let i = 0; i < fileNames.length; i++){
                 const name = fileNames[i];
                 if (!name.includes('.glb')) continue;
@@ -208,16 +298,17 @@ export class BuildingScene {
     
                 const fragment = await this.fragments.load(geometryURL, dataURL);
 
-                        // Group items by category and by floor
-
                 const data = await entries[dataName].json();
-                const allTypes = await entries["all-types.json"].json();
-                const modelTypes = await entries["model-types.json"].json();
-                const levelsProperties = await entries["levels-properties.json"].json();
-                const levelsRelationship = await entries[
-                "levels-relationship.json"
-                ].json();
 
+                const lines = this.fragments.edges.generate(fragment);
+                lines.removeFromParent();
+        
+                // Set up clipping edges
+        
+                const styles = this.getClipper().styles.get();
+                const thinStyle = styles["thin_lines"];
+                thinStyle.meshes.push(fragment.mesh);
+               
                 const groups = { category: {}, floor: {} } as any;
 
                 const floorNames = {} as any;
