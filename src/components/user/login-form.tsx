@@ -1,12 +1,13 @@
-import Button from "@mui/material/Button/Button";
 import { FC } from "react";
 import { Navigate } from "react-router-dom";
 import { useAppContext } from "../../middleware/context-provider";
+import "./user-styles.css";
+import { Box, Button } from "@mui/material";
 
 export const LoginForm: FC = () => {
   const [state, dispatch] = useAppContext();
 
-  const onLogin = () => {
+  const onLoginClick = () => {
     dispatch({ type: "LOGIN" });
   };
 
@@ -14,10 +15,19 @@ export const LoginForm: FC = () => {
     return <Navigate to="/map" />;
   }
   return (
-    <h1>
-      <Button variant="contained" color="primary" onClick={onLogin}>
-        Login
+    <Box
+      sx={{
+        marginTop: 8,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
+      <img className="landing-logo" alt="ifcjs logo" src="ifcjs-logo.png" />
+
+      <Button variant="contained" color="primary" onClick={onLoginClick}>
+        Click here to log in.
       </Button>
-    </h1>
+    </Box>
   );
 };

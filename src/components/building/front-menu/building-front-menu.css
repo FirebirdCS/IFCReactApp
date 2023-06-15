@@ -3,6 +3,7 @@
     height: 80vh;
     min-width: 25%;
     z-index: 1;
+    overflow-y: auto !important;
   }
   
   .front-menu-content {

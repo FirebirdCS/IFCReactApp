@@ -1,5 +1,5 @@
 import { Events } from "./../../middleware/event-handler";
-import { Floorplan } from "./../../types";
+import { Floorplan, Property } from "./../../types";
 import * as OBC from "openbim-components";
 import * as THREE from "three";
 import { BuildingDb } from "./building-db";
@@ -14,6 +14,7 @@ export class BuildingScene {
     private fragments: OBC.Fragments;
     private floorplans: Floorplan[] = [];    
     private whiteMaterial = new THREE.MeshBasicMaterial({ color: "white" });
+    private properties: { [fragID: string]: any } = {};
 
     get container(){
         const domElement = this.components.renderer.get().domElement;
@@ -73,6 +74,7 @@ export class BuildingScene {
     }
     dispose(){
         this.components.dispose();
+        this.properties = {};
         this.toggleEvents(false);
         this.whiteMaterial.dispose();
         (this.components as any) = null;
@@ -249,6 +251,7 @@ export class BuildingScene {
             const {entries} = await unzip(url);
             const fileNames = Object.keys(entries);
 
+            const properties = await entries["properties.json"].json();
             const allTypes = await entries["all-types.json"].json();
             const modelTypes = await entries["model-types.json"].json();
             const levelsProperties = await entries["levels-properties.json"].json();
@@ -298,6 +301,8 @@ export class BuildingScene {
     
                 const fragment = await this.fragments.load(geometryURL, dataURL);
 
+                this.properties[fragment.id] = properties;
+
                 const data = await entries[dataName].json();
 
                 const lines = this.fragments.edges.generate(fragment);
@@ -346,7 +351,26 @@ export class BuildingScene {
     }
 
     private select = () => {
-        this.fragments.highlighter.highlight("selection");
+      const result = this.fragments.highlighter.highlight("selection");
+      if (result) {
+        const allProps = this.properties[result.fragment.id];
+        const props = allProps[result.id];
+        if (props) {
+          const formatted: Property[] = [];
+          for (const name in props) {
+            let value = props[name];
+            if (!value) value = "Unknown";
+            if (value.value) value = value.value;
+            if (typeof value === "number") value = value.toString();
+            formatted.push({ name, value });
+          }
+          return this.events.trigger({
+            type: "UPDATE_PROPERTIES",
+            payload: formatted,
+          });
+        }
+      }
+      this.events.trigger({ type: "UPDATE_PROPERTIES", payload: [] });
     }
    
 };
