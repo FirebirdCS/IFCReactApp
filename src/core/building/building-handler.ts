@@ -11,7 +11,6 @@ export const buildingHandler = {
     },
     remove(){
         if(this.viewer){
-            console.log("Viewer removed");
             this.viewer.dispose();
             this.viewer = null;
         }

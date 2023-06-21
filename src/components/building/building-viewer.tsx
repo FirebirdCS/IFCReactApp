@@ -13,7 +13,7 @@ import { BuildingBottomMenu } from "./bottom-menu/building-bottom-menu";
 
 export const BuildingViewer: FC = () => {
   const [width] = useState(240);
-  const [sideOpen, setSideOpen] = useState(false);
+  const [sideOpen, setSideOpen] = useState(true);
   const [frontOpen, setFrontOpen] = useState(false);
   const [frontMenu, setFrontMenu] = useState<FrontMenuMode>("BuildingInfo");
 
@@ -47,7 +47,7 @@ export const BuildingViewer: FC = () => {
       <BuildingTopBar
         width={width}
         open={sideOpen}
-        onOpen={() => toggleDrawer(true)}
+        onOpen={() => toggleDrawer(!sideOpen)}
       />
 
       <BuildingDrawer

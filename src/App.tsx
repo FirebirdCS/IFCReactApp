@@ -1,5 +1,10 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  HashRouter,
+} from "react-router-dom";
 import "./App.css";
 import { BuildingViewer } from "./components/building/building-viewer";
 import { LoginForm } from "./components/user/login-form";
@@ -9,14 +14,14 @@ import { ContextProvider } from "./middleware/context-provider";
 function App() {
   return (
     <ContextProvider>
-      <Router>
+      <HashRouter>
         <Routes>
           <Route path="/building" element={<BuildingViewer />} />
           <Route path="/map" element={<MapViewer />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/" element={<LoginForm />} />
         </Routes>
-      </Router>
+      </HashRouter>
     </ContextProvider>
   );
 }

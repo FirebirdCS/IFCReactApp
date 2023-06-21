@@ -1,9 +1,14 @@
+.ifcjs-logo {
+  height: 1.5rem;
+  margin-right: 0.5rem;
+}
+
 .landing-logo {
-    max-width: 8rem;
-    margin: 0.5rem auto 2rem auto;
-    animation: logo-spin 8s infinite 0s cubic-bezier(0.38, 0.01, 0, 0.99);
-    display: block;
-  }
+  max-width: 8rem;
+  margin: 0.5rem auto 2rem auto;
+  animation: logo-spin 8s infinite 0s cubic-bezier(0.38, 0.01, 0, 0.99);
+  display: block;
+}
   
   @keyframes logo-spin {
     0% {
@@ -21,4 +26,60 @@
     100% {
       transform: rotate(360deg);
     }
+  }
+
+  .homepage-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ajusta el tamaño para ocupar toda la altura de la pantalla */
+    background-color: #FBFAF8; /* Cambia el color de fondo según tus preferencias */
+  }
+ 
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: #f1f1f1;
+  }
+  
+  .navbar-title {
+    margin: 0;
+  }
+  
+  .login-button {
+    margin-left: 1rem;
+  }
+  
+  .content-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; 
+    margin-top: 10rem;
+    background-color: #FBFAF8;
+    flex-grow: 1; 
+  }
+  
+  .left-content {
+    flex: 1;
+  }
+  
+  .right-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding-left: 2rem;
+  }
+  
+  .right-content h2 {
+    margin: 0;
+    padding-bottom: 10px;
+  }
+  
+  .right-content p {
+    margin: 0;
+    margin-bottom: 0.5rem;
+    max-width: 70%; 
   }

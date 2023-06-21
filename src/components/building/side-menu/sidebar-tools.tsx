@@ -33,6 +33,13 @@ export function getSidebarTools(
       },
     },
     {
+      name: "Map viewer",
+      icon: <MapIcon />,
+      action: () => {
+        dispatch({ type: "CLOSE_BUILDING" });
+      },
+    },
+    {
       name: "Models",
       icon: <ModelsIcon />,
       action: () => {
@@ -53,23 +60,16 @@ export function getSidebarTools(
         toggleMenu(true, "Properties");
       },
     },
-    {
+    /*{
       name: "Issues",
       icon: <ErrorIcon />,
       action: () => {},
-    },
-    {
-      name: "Map viewer",
-      icon: <MapIcon />,
-      action: () => {
-        dispatch({ type: "CLOSE_BUILDING" });
-      },
-    },
-    {
+    },*/
+    /*{
       name: "Excel",
       icon: <TableChartIcon />,
       action: () => {},
-    },
+    },*/
     {
       name: "Delete building",
       icon: <DeleteIcon />,

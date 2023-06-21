@@ -6,6 +6,9 @@ import { User } from 'firebase/auth';
 import { CSS2DObject } from 'three/examples/jsm/renderers/CSS2DRenderer';
 import { MapDatabase } from './map-database';
 import { Events } from '../../middleware/event-handler';
+import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
+import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
+import MapboxGeocoderControlOptions from '@mapbox/mapbox-gl-geocoder';
 export class MapScene {
     private components = new OBC.Components();
     private readonly style = "mapbox://styles/mapbox/dark-v10";
@@ -16,6 +19,7 @@ export class MapScene {
     private database = new MapDatabase();
     private events: Events;
 
+    
     constructor(container: HTMLDivElement, events: Events){
         this.events = events;
         const configuration = this.getConfig(container);
@@ -35,6 +39,7 @@ export class MapScene {
         }
         this.labels = {};
     }
+    
 
     async getAllBuildings(user: User){
         const buildings = await this.database.getBuildings(user);
@@ -109,15 +114,26 @@ export class MapScene {
         const merc = MAPBOX.MercatorCoordinate;
         return merc.fromLngLat(config.center, 0);
     }
-
+    
     private createMap(config: GisParameters){
         const map = new MAPBOX.Map({
             ...config,
             style: this.style,
-            antialias: true
-        })
+            antialias: true,
+        });
         map.on("contextmenu", this.storeMousePosition);
+        const geocoder = new MapboxGeocoder({
+            accessToken: process.env.REACT_APP_MAPBOX_TOKEN ?? "",
+            mapboxgl: MAPBOX,
+            placeholder: 'Search your coordinates',
+            bbox: [-180, -90, 180, 90],
+            reverseGeocode: true
+          });
+        
+          map.addControl(geocoder);
+
         return map;
+
     }
 
     private storeMousePosition = (event: MAPBOX.MapMouseEvent) => {
