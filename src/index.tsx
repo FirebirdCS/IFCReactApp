@@ -19,6 +19,14 @@ const theme = createTheme({
       main: "#EF6337",
     },
   },
+  typography: {
+    fontFamily: "Montserrat, sans-serif",
+    fontSize: 13,
+    fontWeightLight: 300,
+    fontWeightRegular: 600,
+    fontWeightMedium: 600,
+    fontWeightBold: 700,
+  },
 });
 
 // Import the functions you need from the SDKs you need

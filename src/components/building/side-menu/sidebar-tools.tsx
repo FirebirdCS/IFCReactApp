@@ -7,11 +7,10 @@ import ListIcon from "@mui/icons-material/ViewList";
 import TableChartIcon from "@mui/icons-material/TableChart";
 import DeleteIcon from "@mui/icons-material/Delete";
 import PropertiesIcon from "@mui/icons-material/Info";
-import { Action } from "../../../middleware/actions";
-import { State } from "../../../middleware/state";
-import Alert from "@mui/material/Alert/Alert";
-import React, { useState } from "react";
+import React from "react";
 import { FrontMenuMode } from "../types";
+import { State } from "../../../middleware/state";
+import { Action } from "../../../middleware/actions";
 
 interface SideTool {
   name: string;
