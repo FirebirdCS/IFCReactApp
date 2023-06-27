@@ -24,7 +24,7 @@ export const LoginForm: FC = () => {
             src="https://firebirdcs.github.io/IFCReactApp/ifcjs-logo.png"
             alt="ifcjs logo"
           />{" "}
-          IFC Viewer
+          Visor IFC
         </h1>
         <Button
           className="login-button"
@@ -32,7 +32,7 @@ export const LoginForm: FC = () => {
           color="primary"
           onClick={onLoginClick}
         >
-          Log In
+          Iniciar sesión
         </Button>
       </nav>
       <div className="content-container">
@@ -44,11 +44,12 @@ export const LoginForm: FC = () => {
           />
         </div>
         <div className="right-content">
-          <h2>Your IFC model in the web!</h2>
+          <h2>¡Tú modelo IFC en la web!</h2>
           <p>
-            IFC.js takes advantage of the browsers to display a fully modeled
-            IFC for the user. You have options to manage the coordinates,
-            properties and tools about your IFC model.
+            La herramienta IFC.js toma ventaja de los buscadores para mostrar
+            modelos completos IFC para el usuario. Tienes distintas opciones
+            para manejar coordenadas, propiedades y herramientas acerca de tu
+            modelo IFC.
           </p>
         </div>
       </div>

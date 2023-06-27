@@ -20,34 +20,39 @@ export const BuildingSidebar: FC<{
   const tools = getSidebarTools(state, dispatch, onToggleMenu);
 
   return (
-    <List>
-      {tools.map((tool) => (
-        <ListItem
-          onClick={tool.action}
-          key={tool.name}
-          disablePadding
-          sx={{ display: "block" }}
-        >
-          <ListItemButton
-            sx={{
-              minHeight: 48,
-              justifyContent: open ? "initial" : "center",
-              px: 2.5,
-            }}
+    <>
+      <List>
+        {tools.map((tool) => (
+          <ListItem
+            onClick={tool.action}
+            key={tool.name}
+            disablePadding
+            sx={{ display: "block" }}
           >
-            <ListItemIcon
+            <ListItemButton
               sx={{
-                minWidth: 0,
-                mr: open ? 3 : "auto",
-                justifyContent: "center",
+                minHeight: 48,
+                justifyContent: open ? "initial" : "center",
+                px: 2.5,
               }}
             >
-              {tool.icon}
-            </ListItemIcon>
-            <ListItemText primary={tool.name} sx={{ opacity: open ? 1 : 0 }} />
-          </ListItemButton>
-        </ListItem>
-      ))}
-    </List>
+              <ListItemIcon
+                sx={{
+                  minWidth: 0,
+                  mr: open ? 3 : "auto",
+                  justifyContent: "center",
+                }}
+              >
+                {tool.icon}
+              </ListItemIcon>
+              <ListItemText
+                primary={tool.name}
+                sx={{ opacity: open ? 1 : 0 }}
+              />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+    </>
   );
 };

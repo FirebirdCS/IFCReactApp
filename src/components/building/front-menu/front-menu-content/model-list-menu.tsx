@@ -1,14 +1,15 @@
 import { Button, IconButton } from "@mui/material";
 import { FC } from "react";
 import { useAppContext } from "../../../../middleware/context-provider";
-import { BuildingDrawer } from "../../side-menu/building-drawer";
 import DeleteIcon from "@mui/icons-material/Clear";
 import "./front-menu-content.css";
-export const ModelListMenu: FC = () => {
-  const [{ building, user }, dispatch] = useAppContext();
 
+export const ModelListMenu: FC = () => {
+  const [state, dispatch] = useAppContext();
+
+  const { building, user } = state;
   if (!building || !user) {
-    throw new Error("Error: Building or user not found!");
+    throw new Error("Error: building or user not found");
   }
 
   const onUploadModel = () => {
@@ -19,17 +20,17 @@ export const ModelListMenu: FC = () => {
     input.onchange = () => {
       if (input.files && input.files.length) {
         const file = input.files[0];
+        if (!file.name.includes(".ifc")) return;
         const newBuilding = { ...building };
-        const { name } = file;
         const id = `${file.name}-${performance.now()}`;
-        const model = { name, id };
+        const model = { name: file.name, id };
         newBuilding.models.push(model);
         dispatch({
           type: "UPLOAD_MODEL",
           payload: {
-            model,
-            file,
             building: newBuilding,
+            file,
+            model,
           },
         });
       }
@@ -40,17 +41,17 @@ export const ModelListMenu: FC = () => {
 
   const onDeleteModel = (id: string) => {
     const newBuilding = { ...building };
-    const model = newBuilding.models.find((model) => model.id);
+    const model = newBuilding.models.find((model) => model.id === id);
     if (!model) throw new Error("Model not found!");
     newBuilding.models = newBuilding.models.filter((model) => model.id !== id);
     dispatch({
       type: "DELETE_MODEL",
-      payload: { model, building: newBuilding },
+      payload: { building: newBuilding, model },
     });
   };
 
   return (
-    <div>
+    <div className="full-width">
       {building.models.length ? (
         building.models.map((model) => (
           <div className="list-item" key={model.id}>
@@ -61,11 +62,11 @@ export const ModelListMenu: FC = () => {
           </div>
         ))
       ) : (
-        <p>This building has no models</p>
+        <p>This building has no models!</p>
       )}
       <div className="list-item">
-        <Button onClick={onUploadModel} variant="contained" color="primary">
-          Upload Model
+        <Button onClick={onUploadModel} className="submit-button">
+          Upload model
         </Button>
       </div>
     </div>

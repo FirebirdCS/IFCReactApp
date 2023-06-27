@@ -1,1 +1,1 @@
-export type FrontMenuMode = "BuildingInfo" | "ModelList" | "Properties"| "Floorplans";;
+export type FrontMenuMode = "BuildingInfo" | "ModelList" | "Properties"| "Floorplans" | "Credits";

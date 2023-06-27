@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState, useEffect } from "react";
 import { useTheme } from "@mui/material/styles";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
@@ -15,16 +15,38 @@ export const BuildingDrawer: FC<{
   onClose: () => void;
 }> = (props) => {
   const theme = useTheme();
-
   const { open, width: drawerWidth, onClose, onToggleMenu } = props;
+  const [sidebarOpen, setSidebarOpen] = useState(open);
+
+  useEffect(() => {
+    setSidebarOpen(open);
+  }, [open]);
+
+  const handleCloseSidebar = () => {
+    onClose();
+    setSidebarOpen(false);
+  };
 
   const Drawer = getDrawer(drawerWidth);
   const DrawerHeader = getDrawerHeader();
 
+  const imageStyles = {
+    display: sidebarOpen ? "block" : "none",
+    width: "60%",
+    marginLeft: "35px",
+    marginRight: "auto",
+    marginTop: "15px",
+    marginBottom: "10px",
+  };
+
   return (
     <Drawer variant="permanent" open={open}>
       <DrawerHeader>
-        <IconButton onClick={onClose}>
+        <img
+          style={imageStyles}
+          src={process.env.PUBLIC_URL + "/BIMCA-Negro-01.png"}
+        />
+        <IconButton onClick={handleCloseSidebar}>
           {theme.direction === "rtl" ? (
             <ChevronRightIcon />
           ) : (
@@ -33,7 +55,11 @@ export const BuildingDrawer: FC<{
         </IconButton>
       </DrawerHeader>
       <BuildingSidebar onToggleMenu={onToggleMenu} open={open} />
-      <Divider />
+      {sidebarOpen && (
+        <>
+          <Divider />
+        </>
+      )}
     </Drawer>
   );
 };

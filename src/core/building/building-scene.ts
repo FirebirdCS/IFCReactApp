@@ -227,8 +227,6 @@ export class BuildingScene {
         }
     }
 
-
-
     private async serializeFragments(model: OBC.FragmentGroup){
         const files = [];
         for(const frag of model.fragments){
@@ -300,6 +298,7 @@ export class BuildingScene {
                 const dataURL = URL.createObjectURL(dataBlob);
     
                 const fragment = await this.fragments.load(geometryURL, dataURL);
+                // fragment.mesh.position.y = 3.5;
 
                 this.properties[fragment.id] = properties;
 

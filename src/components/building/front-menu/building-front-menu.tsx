@@ -7,6 +7,7 @@ import { FrontMenuMode } from "../types";
 import { ModelListMenu } from "./front-menu-content/model-list-menu";
 import { PropertiesMenu } from "./front-menu-content/properties-menu";
 import { FloorplanMenu } from "./front-menu-content/floorplan-menu";
+import { CreditsInfo } from "./front-menu-content/credits-info";
 
 export const BuildingFrontMenu: FC<{
   mode: FrontMenuMode;
@@ -22,12 +23,14 @@ export const BuildingFrontMenu: FC<{
   content.set("ModelList", <ModelListMenu />);
   content.set("Properties", <PropertiesMenu />);
   content.set("Floorplans", <FloorplanMenu />);
+  content.set("Credits", <CreditsInfo />);
 
   const titles = {
-    BuildingInfo: "Building Information",
-    ModelList: "Model List",
-    Properties: "Properties",
-    Floorplans: "Floorplans",
+    BuildingInfo: "Información del edificio",
+    ModelList: "Lista de modelos",
+    Properties: "Propiedades",
+    Floorplans: "Planos de planta",
+    Credits: "Créditos",
   };
 
   const title = titles[mode];

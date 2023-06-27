@@ -11,7 +11,7 @@ export const PropertiesMenu: FC = () => {
       {Boolean(state.properties.length) ? (
         <Divider />
       ) : (
-        <p>No item selected.</p>
+        <p>No tienes seleccionado un objeto.</p>
       )}
 
       {state.properties.map((property) => (

@@ -6,6 +6,7 @@ import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
 import "./map-viewer.css";
 import { Box, Modal, Typography } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import PreviousIcon from "@mui/icons-material/ArrowBack";
 
 export const MapViewer: FC = () => {
   const [isCreating, setIsCreating] = useState(false);
@@ -48,7 +49,8 @@ export const MapViewer: FC = () => {
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: 400,
+    width: 600,
+    maxHeight: 500,
     bgcolor: "background.paper",
     border: "2px solid #000",
     boxShadow: 24,
@@ -59,8 +61,8 @@ export const MapViewer: FC = () => {
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: 600, // Ajusta el ancho del segundo modal según tus necesidades
-    maxHeight: 500, // Ajusta la altura máxima del segundo modal según tus necesidades
+    width: 600,
+    maxHeight: 500,
     bgcolor: "background.paper",
     border: "2px solid #000",
     boxShadow: 24,
@@ -72,6 +74,7 @@ export const MapViewer: FC = () => {
     if (container && user) {
       dispatch({ type: "START_MAP", payload: { container, user } });
     }
+    openModal();
   }, []);
 
   if (!user) {
@@ -96,23 +99,40 @@ export const MapViewer: FC = () => {
       />
       {isCreating && (
         <div className="overlay">
-          <p>Right click to create a new building or</p>
-          <Button onClick={onToggleCreate}>Cancel</Button>
+          <p>Haz click derecho para crear un nuevo edificio o</p>
+          <Button onClick={onToggleCreate}>Cancelar</Button>
         </div>
       )}
       <div className="gis-button-container">
         <Button color="primary" variant="contained" onClick={onToggleCreate}>
-          Create building
+          Crear edificio
         </Button>
         <Button color="primary" variant="contained" onClick={onLogout}>
-          Logout
+          Cerrar sesión
         </Button>
+      </div>
+      <div className="img-container">
+        <img
+          className="logo-img"
+          src={process.env.PUBLIC_URL + "/BIMCA-Crema-01.png"}
+        />
       </div>
       <div className="round-button-container">
         <Button
           variant="contained"
           color="primary"
-          className="round-button"
+          style={{
+            width: "36px",
+            height: "36px",
+            borderRadius: "100%",
+            fontSize: "20px",
+            color: "#fff",
+            lineHeight: "50px",
+            textAlign: "center",
+            background: "#EF6337",
+            minWidth: "unset",
+            padding: "0",
+          }}
           onClick={openModal}
         >
           <QuestionMarkIcon />
@@ -125,12 +145,24 @@ export const MapViewer: FC = () => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
+          <Typography
+            id="modal-modal-title"
+            variant="h6"
+            component="h6"
+            sx={{
+              fontWeight: "bold",
+              fontSize: "1.5rem",
+            }}
+          >
+            Pasos para crear un edificio
+          </Typography>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            How do I create a building?
+            Coordenadas
           </Typography>
           <Typography mb={2} id="modal-modal-description" sx={{ mt: 2 }}>
-            Things first, you need the coordinates in hand and you need to type
-            it in order: First latitude, second longitude
+            Antes que todo, necesitas las coordenadas en mano y necesitas
+            escribirlas dentro de la barra de búsqueda de la siguiente manera:
+            Primero latitud, segundo longitud.
           </Typography>
           <img
             className="modal-image"
@@ -140,20 +172,36 @@ export const MapViewer: FC = () => {
           <div
             style={{
               display: "flex",
-              justifyContent: "flex-end",
+              justifyContent: "space-between",
+              alignItems: "center",
               marginTop: "16px",
             }}
           >
             <Button
               variant="contained"
               color="primary"
-              onClick={openSecondModal}
-              startIcon={<ArrowForwardIcon />}
+              onClick={closeModal}
               sx={{
-                width: "50px",
-                padding: "4px",
+                width: "70px",
+                padding: "6px",
+                marginRight: "8px",
               }}
-            ></Button>
+            >
+              X
+            </Button>
+
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={openSecondModal}
+              sx={{
+                width: "70px",
+                padding: "6px",
+                marginRight: "14px",
+              }}
+            >
+              <ArrowForwardIcon />
+            </Button>
           </div>
         </Box>
       </Modal>
@@ -164,18 +212,66 @@ export const MapViewer: FC = () => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={secondStyle}>
+          <Typography
+            id="modal-modal-title"
+            variant="h6"
+            component="h6"
+            sx={{
+              fontWeight: "bold",
+              fontSize: "1.5rem",
+            }}
+          >
+            Pasos para hacer un edificio
+          </Typography>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            How do I create a building?
+            Hacer un edificio
           </Typography>
           <Typography mb={2} id="modal-modal-description" sx={{ mt: 2 }}>
-            Now that you introduced the coordinates all you have to do is right
-            click where do you want to create a new building!
+            Ahora que has introducido las coordenadas todo lo que debes que
+            hacer es hacer click derecho en el lugar donde quieres crear tu
+            edificio!
           </Typography>
           <img
             className="second-modal-image"
             src={process.env.PUBLIC_URL + "/Paso2.gif"}
             alt="Pasos"
           />
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginTop: "10px",
+            }}
+          >
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => {
+                closeSecondModal();
+                openModal();
+              }}
+              sx={{
+                width: "70px",
+                padding: "8px",
+                marginRight: "8px",
+              }}
+            >
+              <PreviousIcon />
+            </Button>
+
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={closeSecondModal}
+              sx={{
+                width: "70px",
+                padding: "6px",
+              }}
+            >
+              X
+            </Button>
+          </div>
         </Box>
       </Modal>
     </>

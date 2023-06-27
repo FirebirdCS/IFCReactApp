@@ -125,7 +125,7 @@ export class MapScene {
         const geocoder = new MapboxGeocoder({
             accessToken: process.env.REACT_APP_MAPBOX_TOKEN ?? "",
             mapboxgl: MAPBOX,
-            placeholder: 'Search your coordinates',
+            placeholder: 'Busca tus coordenadas',
             bbox: [-180, -90, 180, 90],
             reverseGeocode: true
           });
@@ -150,6 +150,7 @@ export class MapScene {
             pitch: 60,
             bearing: -40,
             center,
+            logoEnabled: false,
             buildings: [],
         }
     }

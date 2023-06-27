@@ -7,6 +7,7 @@ import ListIcon from "@mui/icons-material/ViewList";
 import TableChartIcon from "@mui/icons-material/TableChart";
 import DeleteIcon from "@mui/icons-material/Delete";
 import PropertiesIcon from "@mui/icons-material/Info";
+import HelpCenterIcon from "@mui/icons-material/HelpCenter";
 import React from "react";
 import { FrontMenuMode } from "../types";
 import { State } from "../../../middleware/state";
@@ -25,35 +26,35 @@ export function getSidebarTools(
 ): SideTool[] {
   return [
     {
-      name: "Info",
+      name: "Información",
       icon: <ListIcon />,
       action: () => {
         toggleMenu(true, "BuildingInfo");
       },
     },
     {
-      name: "Map viewer",
+      name: "Mapa",
       icon: <MapIcon />,
       action: () => {
         dispatch({ type: "CLOSE_BUILDING" });
       },
     },
     {
-      name: "Models",
+      name: "Modelos",
       icon: <ModelsIcon />,
       action: () => {
         toggleMenu(true, "ModelList");
       },
     },
     {
-      name: "Floorplans",
+      name: "Planos de planta",
       icon: <FloorplanIcon />,
       action: () => {
         toggleMenu(true, "Floorplans");
       },
     },
     {
-      name: "Properties",
+      name: "Propiedades",
       icon: <PropertiesIcon />,
       action: () => {
         toggleMenu(true, "Properties");
@@ -70,14 +71,23 @@ export function getSidebarTools(
       action: () => {},
     },*/
     {
-      name: "Delete building",
+      name: "Eliminar edificio",
       icon: <DeleteIcon />,
       action: () => {
-        dispatch({ type: "DELETE_BUILDING", payload: state.building });
+        if (window.confirm("¿De verdad quieres eliminar este edificio?")) {
+          dispatch({ type: "DELETE_BUILDING", payload: state.building });
+        }
       },
     },
     {
-      name: "Log out",
+      name: "Créditos",
+      icon: <HelpCenterIcon />,
+      action: () => {
+        toggleMenu(true, "Credits");
+      },
+    },
+    {
+      name: "Cerrar sesión",
       icon: <LogoutIcon />,
       action: () => {
         dispatch({ type: "LOGOUT" });

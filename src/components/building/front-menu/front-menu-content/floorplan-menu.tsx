@@ -28,7 +28,7 @@ export const FloorplanMenu: FC = () => {
           onClick={() => onFloorplanSelected(false)}
           className="wide-button"
         >
-          Exit
+          Cerrar
         </Button>
       </div>
     </div>
