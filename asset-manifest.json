@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/IFCReactApp/static/css/main.404b17d8.css",
-    "main.js": "/IFCReactApp/static/js/main.b96bacbf.js",
+    "main.js": "/IFCReactApp/static/js/main.e8245ecc.js",
     "static/media/montserrat-all-700-normal.woff": "/IFCReactApp/static/media/montserrat-all-700-normal.168d5b114e5a6d216802.woff",
     "static/media/montserrat-all-600-normal.woff": "/IFCReactApp/static/media/montserrat-all-600-normal.3e143051a8039d6b6e99.woff",
     "static/media/montserrat-all-500-normal.woff": "/IFCReactApp/static/media/montserrat-all-500-normal.124bdbbc44b5aae423df.woff",
@@ -30,6 +30,6 @@
   },
   "entrypoints": [
     "static/css/main.404b17d8.css",
-    "static/js/main.b96bacbf.js"
+    "static/js/main.e8245ecc.js"
   ]
 }
