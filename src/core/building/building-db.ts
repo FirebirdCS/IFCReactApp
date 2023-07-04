@@ -2,7 +2,6 @@ import { getApp } from "firebase/app";
 import { Building } from "../../types";
 import { FirebaseStorage, getDownloadURL, getStorage, ref } from "firebase/storage";
 import { ModelDatabase } from "./dexie-utils";
-import { url } from "inspector";
 
 export class BuildingDb {
     private db = new ModelDatabase();

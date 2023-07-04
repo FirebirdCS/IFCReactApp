@@ -71,7 +71,11 @@ export const BuildingInfoMenu: FC<{
         />
       </div>
       <div className="list-item">
-        <Button type="submit" className="submit-button">
+        <Button
+          type="submit"
+          className="submit-button"
+          aria-label="Update building"
+        >
           Actualizar edificio
         </Button>
       </div>

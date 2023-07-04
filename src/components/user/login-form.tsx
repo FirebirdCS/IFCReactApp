@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Navigate } from "react-router-dom";
 import { useAppContext } from "../../middleware/context-provider";
 import "./user-styles.css";
-import { Box, Button } from "@mui/material";
+import { Button } from "@mui/material";
 
 export const LoginForm: FC = () => {
   const [state, dispatch] = useAppContext();
@@ -18,33 +18,36 @@ export const LoginForm: FC = () => {
   return (
     <div className="homepage-container">
       <nav className="navbar">
-        <h1 className="navbar-title">
-          <img
-            className="ifcjs-logo"
-            src="https://firebirdcs.github.io/IFCReactApp/ifcjs-logo.png"
-            alt="ifcjs logo"
-          />{" "}
-          Visor IFC
-        </h1>
+        <img
+          className="bimca-logo"
+          src={process.env.PUBLIC_URL + "/01-BIMCA.png"}
+          alt="bimca logo"
+        />{" "}
         <Button
           className="login-button"
           variant="contained"
           color="primary"
           onClick={onLoginClick}
+          aria-label="Login button"
         >
           Iniciar sesión
         </Button>
       </nav>
       <div className="content-container">
-        <div className="left-content">
-          <img
-            className="landing-logo"
-            alt="ifcjs logo"
-            src="https://firebirdcs.github.io/IFCReactApp/ifcjs-logo.png"
-          />
-        </div>
         <div className="right-content">
-          <h2>¡Tú modelo IFC en la web!</h2>
+          <h1>
+            VISOR IFC
+            <sup
+              style={{
+                fontSize: "0.6em",
+                verticalAlign: "0.45em",
+                fontWeight: "800",
+              }}
+            >
+              ™
+            </sup>
+          </h1>
+          <h2>TÚ MODELO IFC EN LA WEB</h2>
           <p>
             La herramienta IFC.js toma ventaja de los buscadores para mostrar
             modelos completos IFC para el usuario. Tienes distintas opciones

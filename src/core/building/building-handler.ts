@@ -39,6 +39,16 @@ export const buildingHandler = {
           this.viewer.explode(active);
         }
       },
+    desactivateGrid(active: boolean){
+        if(this.viewer) {
+            this.viewer.desactivateGrid(active);
+        }
+    },
+    activateGrid(active: boolean){
+        if(this.viewer) {
+            this.viewer.activateGrid(active);
+        }
+    },
      
     toggleClippingPlanes(active: boolean) {
         if (this.viewer) {

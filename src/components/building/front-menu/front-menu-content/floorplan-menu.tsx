@@ -27,6 +27,7 @@ export const FloorplanMenu: FC = () => {
         <Button
           onClick={() => onFloorplanSelected(false)}
           className="wide-button"
+          aria-label="Close floorplan mode"
         >
           Cerrar
         </Button>

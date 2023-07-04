@@ -1,7 +1,7 @@
 {
   "name": "ifc-react",
   "version": "0.1.0",
-  "homepage": "/IFCReactApp/#",
+  "homepage": "https://viewer.bim-ca.com/",
   "private": false,
   "dependencies": {
     "@emotion/react": "^11.10.6",

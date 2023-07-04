@@ -19,6 +19,8 @@ export const ActionList = [
  "TOGGLE_FLOORPLAN",
  "UPDATE_FLOORPLANS",
  "UPDATE_PROPERTIES",
+ "DESACTIVATE_GRID",
+ "ACTIVATE_GRID"
 ] as const;
 
 

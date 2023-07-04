@@ -2,6 +2,9 @@ import { Tool } from "../../../types";
 import CutIcon from "@mui/icons-material/ContentCut";
 import RulerIcon from "@mui/icons-material/Straighten";
 import ExplodeIcon from "@mui/icons-material/ImportExport";
+import GridOffIcon from "@mui/icons-material/GridOff";
+import GridOnIcon from "@mui/icons-material/GridOn";
+import { useState } from "react";
 
 export function getBottombarTools(): Tool[] {
   const tools = [
@@ -36,6 +39,28 @@ export function getBottombarTools(): Tool[] {
         deactivateAllTools(dispatch, "Explosion");
         tool.active = !tool.active;
         dispatch({ type: "EXPLODE_MODEL", payload: tool.active });
+      },
+    },
+    {
+      name: "Grid",
+      icon: <GridOffIcon />,
+      active: false,
+      action: (dispatch: any) => {
+        const tool = findTool("Grid");
+        deactivateAllTools(dispatch, "Grid");
+        tool.active = !tool.active;
+        dispatch({ type: "DESACTIVATE_GRID", payload: !tool.active });
+      },
+    },
+    {
+      name: "Grid2",
+      icon: <GridOnIcon />,
+      active: false,
+      action: (dispatch: any) => {
+        const tool = findTool("Grid2");
+        deactivateAllTools(dispatch, "Grid2");
+        tool.active = !tool.active;
+        dispatch({ type: "ACTIVATE_GRID", payload: !tool.active });
       },
     },
   ];

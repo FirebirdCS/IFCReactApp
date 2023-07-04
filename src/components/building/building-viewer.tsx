@@ -7,7 +7,6 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  Theme,
 } from "@mui/material";
 import { FC, useState } from "react";
 import { Navigate } from "react-router-dom";

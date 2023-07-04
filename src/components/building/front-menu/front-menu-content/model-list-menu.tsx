@@ -65,7 +65,11 @@ export const ModelListMenu: FC = () => {
         <p>This building has no models!</p>
       )}
       <div className="list-item">
-        <Button onClick={onUploadModel} className="submit-button">
+        <Button
+          onClick={onUploadModel}
+          className="submit-button"
+          aria-label="Upload model"
+        >
           Upload model
         </Button>
       </div>

@@ -1,4 +1,4 @@
-import Button from "@mui/material/Button/Button";
+import Button from "@mui/material/Button";
 import { FC, useEffect, useRef, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { useAppContext } from "../../middleware/context-provider";
@@ -50,7 +50,7 @@ export const MapViewer: FC = () => {
     left: "50%",
     transform: "translate(-50%, -50%)",
     width: 600,
-    maxHeight: 500,
+    maxHeight: 600,
     bgcolor: "background.paper",
     border: "2px solid #000",
     boxShadow: 24,
@@ -62,7 +62,7 @@ export const MapViewer: FC = () => {
     left: "50%",
     transform: "translate(-50%, -50%)",
     width: 600,
-    maxHeight: 500,
+    maxHeight: 600,
     bgcolor: "background.paper",
     border: "2px solid #000",
     boxShadow: 24,
@@ -104,10 +104,20 @@ export const MapViewer: FC = () => {
         </div>
       )}
       <div className="gis-button-container">
-        <Button color="primary" variant="contained" onClick={onToggleCreate}>
+        <Button
+          color="primary"
+          variant="contained"
+          onClick={onToggleCreate}
+          aria-label="Create building"
+        >
           Crear edificio
         </Button>
-        <Button color="primary" variant="contained" onClick={onLogout}>
+        <Button
+          color="primary"
+          variant="contained"
+          onClick={onLogout}
+          aria-label="Logout"
+        >
           Cerrar sesión
         </Button>
       </div>
@@ -115,6 +125,7 @@ export const MapViewer: FC = () => {
         <img
           className="logo-img"
           src={process.env.PUBLIC_URL + "/BIMCA-Crema-01.png"}
+          alt="Logo crema 1"
         />
       </div>
       <div className="round-button-container">
@@ -134,6 +145,7 @@ export const MapViewer: FC = () => {
             padding: "0",
           }}
           onClick={openModal}
+          aria-label="Help Button"
         >
           <QuestionMarkIcon />
         </Button>
@@ -186,6 +198,7 @@ export const MapViewer: FC = () => {
                 padding: "6px",
                 marginRight: "8px",
               }}
+              aria-label="Close modal"
             >
               X
             </Button>
@@ -199,6 +212,7 @@ export const MapViewer: FC = () => {
                 padding: "6px",
                 marginRight: "14px",
               }}
+              aria-label="Next modal"
             >
               <ArrowForwardIcon />
             </Button>
@@ -229,7 +243,8 @@ export const MapViewer: FC = () => {
           <Typography mb={2} id="modal-modal-description" sx={{ mt: 2 }}>
             Ahora que has introducido las coordenadas todo lo que debes que
             hacer es hacer click derecho en el lugar donde quieres crear tu
-            edificio!
+            edificio. Por último, haz click izquierdo sobre el ícono para
+            acceder al edificio y poder subir tus modelos.
           </Typography>
           <img
             className="second-modal-image"
@@ -256,6 +271,7 @@ export const MapViewer: FC = () => {
                 padding: "8px",
                 marginRight: "8px",
               }}
+              aria-label="Previous modal"
             >
               <PreviousIcon />
             </Button>
@@ -268,6 +284,7 @@ export const MapViewer: FC = () => {
                 width: "70px",
                 padding: "6px",
               }}
+              aria-label="Close modal"
             >
               X
             </Button>

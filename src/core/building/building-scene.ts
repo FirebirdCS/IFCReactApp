@@ -114,6 +114,15 @@ export class BuildingScene {
         }
       }
 
+    desactivateGrid(active: boolean){
+      this.toggleGrid(!active);
+    }
+
+    
+    activateGrid(active: boolean){
+      this.toggleGrid(active);
+    }
+
     toggleClippingPlanes(active: boolean) {
         const clipper = this.getClipper();
         if (clipper) {
@@ -134,7 +143,6 @@ export class BuildingScene {
         if (active && floorplan) {
           this.toggleGrid(false);
           this.toggleEdges(true);
-          const first = this.floorplans[0];
           floorNav.goTo(floorplan.id);
           this.fragments.materials.apply(this.whiteMaterial);
         } else {
@@ -213,6 +221,7 @@ export class BuildingScene {
         const grid = this.components.tools.get("SimpleGrid") as OBC.SimpleGrid;
         const mesh = grid.get();
         mesh.visible = visible;
+
       }
     private getFloorNav() {
         return this.components.tools.get("PlanNavigator") as OBC.PlanNavigator;

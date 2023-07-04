@@ -7,6 +7,7 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { BuildingSidebar } from "./building-sidebar";
 import { getDrawer, getDrawerHeader } from "./mui-utils";
 import { FrontMenuMode } from "../types";
+import { Typography } from "@mui/material";
 
 export const BuildingDrawer: FC<{
   open: boolean;
@@ -39,12 +40,21 @@ export const BuildingDrawer: FC<{
     marginBottom: "10px",
   };
 
+  const typoStyles = {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    marginTop: "16px",
+    fontWeight: "500",
+  };
+
   return (
     <Drawer variant="permanent" open={open}>
       <DrawerHeader>
         <img
           style={imageStyles}
           src={process.env.PUBLIC_URL + "/BIMCA-Negro-01.png"}
+          alt="Logo negro 1"
         />
         <IconButton onClick={handleCloseSidebar}>
           {theme.direction === "rtl" ? (
@@ -58,6 +68,7 @@ export const BuildingDrawer: FC<{
       {sidebarOpen && (
         <>
           <Divider />
+          <Typography sx={typoStyles}>Versión 2023.1</Typography>
         </>
       )}
     </Drawer>

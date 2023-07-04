@@ -8,7 +8,6 @@ import { MapDatabase } from './map-database';
 import { Events } from '../../middleware/event-handler';
 import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
-import MapboxGeocoderControlOptions from '@mapbox/mapbox-gl-geocoder';
 export class MapScene {
     private components = new OBC.Components();
     private readonly style = "mapbox://styles/mapbox/dark-v10";

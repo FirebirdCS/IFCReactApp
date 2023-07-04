@@ -1,9 +1,10 @@
-.ifcjs-logo {
-  height: 1.5rem;
-  margin-right: 0.5rem;
+.bimca-logo {
+  height: 2.3rem;
+  margin-left: 3rem;
+  margin-top: 10px;
 }
 
-.landing-logo {
+/* .landing-logo {
   max-width: 8rem;
   margin: 0.5rem auto 2rem auto;
   animation: logo-spin 8s infinite 0s cubic-bezier(0.38, 0.01, 0, 0.99);
@@ -26,21 +27,20 @@
     100% {
       transform: rotate(360deg);
     }
-  }
+  }*/
 
   .homepage-container {
     display: flex;
     flex-direction: column;
-    min-height: 100vh; /* Ajusta el tamaño para ocupar toda la altura de la pantalla */
-    background-color: #FBFAF8; /* Cambia el color de fondo según tus preferencias */
+    min-height: 100vh; 
   }
- 
+
   .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem;
-    background-color: #f1f1f1;
+    padding: 2.5rem;
+    background-color: transparent;
   }
   
   .navbar-title {
@@ -49,37 +49,76 @@
   
   .login-button {
     margin-left: 1rem;
+    margin-top: 10px;
   }
   
+
   .content-container {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start; 
-    margin-top: 10rem;
-    background-color: #FBFAF8;
-    flex-grow: 1; 
-  }
-  
-  .left-content {
-    flex: 1;
+    justify-content: flex-end;
+    align-items: flex-start;
+    margin-top: auto;
+    background-image: url('/public/Arch-03.webp');
+    background-size: cover;
+    flex-grow: 1;
   }
   
   .right-content {
-    flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    padding-left: 2rem;
+    justify-content: flex-start;
+    align-items:  flex-start;
+    padding: 7rem;
+    margin-top: 5rem;
+  }
+
+  .right-content h1 {
+    margin: 0;
+    margin-left: 6px;
+    text-align: left;
+    color: #212b37;
+    letter-spacing: 5px;
+    font-weight: 800 !important;
   }
   
   .right-content h2 {
     margin: 0;
-    padding-bottom: 10px;
+    text-align: left;
+    padding: 0.5rem;
+    color: #212b37;
+    font-weight: 600;
   }
-  
   .right-content p {
     margin: 0;
     margin-bottom: 0.5rem;
-    max-width: 70%; 
+    max-width: 25%;
+    text-align: left; 
+    padding: 0.5rem;
+    color: black;
+    
   }
+
+.left-content {
+  flex: 1;
+  background: rgba(0, 0, 0, 0.5);
+}
+  
+@media screen and (max-width: 480px) {
+  .bimca-logo {
+    height: 1.5rem;
+    margin-left: 1rem;
+  }
+
+  .login-button {
+    margin-left: 0.5rem;
+  }
+  .content-container {
+    background-position: right center;
+  }
+  .right-content p {
+    max-width: 100%;
+    line-height: 1.2;
+  }
+}
+
+

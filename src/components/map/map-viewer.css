@@ -60,3 +60,19 @@ margin: 8px 0 !important;
   .small-icon {
     transform: scale(0.75);
   }
+
+  @media screen and (max-width: 480px) {
+    .gis-button-container {
+      margin-top: 70px;
+    }
+    .overlay {
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      height: 100vh;
+    }
+    .overlay > button{
+      margin-left: auto;
+    margin-right: auto;
+  }
+  }
