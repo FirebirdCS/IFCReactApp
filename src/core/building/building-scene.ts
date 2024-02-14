@@ -15,6 +15,8 @@ export class BuildingScene {
     private floorplans: Floorplan[] = [];    
     private whiteMaterial = new THREE.MeshBasicMaterial({ color: "white" });
     private properties: { [fragID: string]: any } = {};
+    private showGrid = false;
+
 
     get container(){
         const domElement = this.components.renderer.get().domElement;
@@ -59,6 +61,7 @@ export class BuildingScene {
         const floorNav = new OBC.PlanNavigator(clipper, camera);
         this.components.tools.add(floorNav);
         const grid = new OBC.SimpleGrid(this.components);
+        grid.visible = this.showGrid;
         this.components.tools.add(grid);
         this.fragments = new OBC.Fragments(this.components);
         this.components.tools.add(this.fragments);
@@ -71,6 +74,7 @@ export class BuildingScene {
         this.loadAllModels(building);
         this.fragments.exploder.groupName = "floor";
         this.setupEvents();
+
     }
     dispose(){
         this.components.dispose();
@@ -113,14 +117,19 @@ export class BuildingScene {
           exploder.reset();
         }
       }
-
-    desactivateGrid(active: boolean){
-      this.toggleGrid(!active);
-    }
-
-    
+ 
     activateGrid(active: boolean){
-      this.toggleGrid(active);
+      const grid = this.components.tools.get("SimpleGrid") as OBC.SimpleGrid;
+      const mesh = grid.get();
+      mesh.visible = false;
+      if (!this.showGrid) {
+        grid.visible = true;
+        this.showGrid = true;
+      } else {
+        grid.visible = false;
+        this.showGrid = false;
+      }
+
     }
 
     toggleClippingPlanes(active: boolean) {
@@ -220,7 +229,7 @@ export class BuildingScene {
     private toggleGrid(visible: boolean) {
         const grid = this.components.tools.get("SimpleGrid") as OBC.SimpleGrid;
         const mesh = grid.get();
-        mesh.visible = visible;
+        mesh.visible = false;
 
       }
     private getFloorNav() {

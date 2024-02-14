@@ -46,9 +46,6 @@ export const executeCore = async (action: Action, events: Events) => {
     if (action.type === "EXPLODE_MODEL") {
         return buildingHandler.explode(action.payload);
     }
-    if (action.type === "DESACTIVATE_GRID") {
-        return buildingHandler.desactivateGrid(action.payload);
-    }
     if (action.type === "ACTIVATE_GRID") {
         return buildingHandler.activateGrid(action.payload);
     }

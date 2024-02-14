@@ -42,24 +42,13 @@ export function getBottombarTools(): Tool[] {
       },
     },
     {
-      name: "Grid",
-      icon: <GridOffIcon />,
-      active: false,
-      action: (dispatch: any) => {
-        const tool = findTool("Grid");
-        deactivateAllTools(dispatch, "Grid");
-        tool.active = !tool.active;
-        dispatch({ type: "DESACTIVATE_GRID", payload: !tool.active });
-      },
-    },
-    {
       name: "Grid2",
       icon: <GridOnIcon />,
       active: false,
       action: (dispatch: any) => {
         const tool = findTool("Grid2");
         deactivateAllTools(dispatch, "Grid2");
-        tool.active = !tool.active;
+        tool.active = tool.active;
         dispatch({ type: "ACTIVATE_GRID", payload: !tool.active });
       },
     },
